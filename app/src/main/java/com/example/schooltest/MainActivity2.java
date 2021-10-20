@@ -24,12 +24,16 @@ public class MainActivity2 extends AppCompatActivity {
     RequestQueue requestQueue;
     String id;
     String key;
+    Snippet snippet;
+
+    PopUp popUp;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
         login = new Login();
+        snippet = new Snippet();
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -37,7 +41,7 @@ public class MainActivity2 extends AppCompatActivity {
         key = "";
         password1ET = (EditText) findViewById(R.id.password1ET);
         userNameET = (EditText) findViewById(R.id.userNameET);
-
+        popUp = new PopUpError(this, "Passwort oder Benutzername ist Falsch!");
 
     }
 
@@ -46,32 +50,17 @@ public class MainActivity2 extends AppCompatActivity {
         login.userName = userNameET.getText().toString();
         login.refreshJSON();
 
-
-        MyRequestHandler.volleyPost("https://schoolschooli.herokuapp.com/rest-auth/login/", login.loginJSON, requestQueue, new VolleyCallback() {
+        MyRequestHandler.volleyPost(popUp,"https://schoolschooli.herokuapp.com/login/", login.loginJSON, requestQueue, key, new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {
                     key = result.getString("key");
-                    Log.d("mykey", key);
-
-                    MyRequestHandler.volleyPost("https://schoolschooli.herokuapp.com/snippets/?key=" + key, null, requestQueue, new VolleyCallback() {
-                        @Override
-                        public void onSuccess(JSONObject result) {
-                            try {
-                                id = result.getString("id");
-                                Log.d("myId", id);
-                                ActivityHandler.switchActivity(MainActivity2.this,HomeActivity.class, id);
-                                finish();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    });
-
-
+                    id = result.getString("SnippetID");
+                    ActivityHandler.switchActivity(MainActivity2.this,HomeActivity.class, id, key);
 
                 } catch (JSONException e) {
+                    popUp.changeMessage("Ich wandle auf dem ewigen Weg des Suchenden :(");
+                    popUp.show();
                     e.printStackTrace();
                 }
             }
@@ -79,7 +68,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void switchToRegister(View view){
-        ActivityHandler.switchActivity(this,MainActivity.class, id);
+        ActivityHandler.switchActivity(this,MainActivity.class, id, key);
         finish();
     }
 }

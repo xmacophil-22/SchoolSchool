@@ -22,6 +22,8 @@ public class Login extends AppCompatActivity {
     String userName;
     String password2;
     String email;
+    String key;
+    String id;
 
 
 
@@ -31,6 +33,9 @@ public class Login extends AppCompatActivity {
         password2 = "";
         email = "";
         userName = "";
+        key = "";
+        id = "";
+
 
         loginJSON = new JSONObject();
 
@@ -46,6 +51,7 @@ public class Login extends AppCompatActivity {
 
             }
 
+
             if (!email.equals("")){
                 loginJSON.put("email", email);
             }
@@ -59,9 +65,6 @@ public class Login extends AppCompatActivity {
                 }
             }
 
-
-
-            Log.d("myJSON", loginJSON.toString());
 
 
         }

@@ -145,7 +145,8 @@
             android:layout_alignStart="@+id/view5"
             android:textSize="42sp"
             android:textColor="#BF967C"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:fontFamily="sans-serif-black" />
 
     <androidx.appcompat.widget.AppCompatButton
             android:text="Login"

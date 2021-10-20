@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     String key;
     String id;
-
+    Snippet snippet;
+    PopUp popUp;
 
 
     @Override
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         id = "";
+        key = "";
+        snippet = new Snippet();
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -48,18 +51,23 @@ public class MainActivity extends AppCompatActivity {
         userNameET = (EditText) findViewById(R.id.userNameET);
         emailET = (EditText) findViewById(R.id.emailET);
         login = new Login();
+        popUp = null;
+
 
 
     }
 
 
     public void changeToLogin(View view){
-        ActivityHandler.switchActivity(this,MainActivity2.class,id);
+        ActivityHandler.switchActivity(this,MainActivity2.class,id, key);
         finish();
     }
 
 
     public void submit(View view) {
+
+        popUp = new PopUpError(this, "Die Post ist nicht angekomen!");
+
 
         ////////////////////////////////////////////////read all inputFields
 
@@ -69,33 +77,39 @@ public class MainActivity extends AppCompatActivity {
         login.email = emailET.getText().toString();
 
         ///////////////////////////////////////////put in JSON
-        login.refreshJSON();
+
+
+
+
 
 
         ///////////////////////////////////////////////////////////sendPostRequest to recieve key
 
         if(login.password1.equals(login.password2)){
-            MyRequestHandler.volleyPost("https://schoolschooli.herokuapp.com/rest-auth/registration/", login.loginJSON, requestQueue,  new VolleyCallback() { ////neeeds change
+            login.refreshJSON();
+            MyRequestHandler.volleyPost(popUp,"https://schoolschooli.herokuapp.com/registration/", login.loginJSON, requestQueue, key,  new VolleyCallback() { ////neeeds change
                 @Override
                 public void onSuccess(JSONObject result) {
                     try {
                         key = result.getString("key");
-                        Log.d("result", key);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        popUp.changeMessage("Ich wandle auf dem ewigen Weg des Key Suchenden :(");
+                        popUp.show();
                     }
                     Snippet snippet = new Snippet();
-                    MyRequestHandler.volleyPost("https://schoolschooli.herokuapp.com/snippets/",snippet.mySnippet, requestQueue, new VolleyCallback() {
+                    MyRequestHandler.volleyPost( popUp,"https://schoolschooli.herokuapp.com/snippets/",snippet.mySnippet, requestQueue, key, new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONObject result) {
                             try {
                                 id = result.getString("id");
-                                Log.d("myId", id);
-                                ActivityHandler.switchActivity(MainActivity.this,HomeActivity.class, id);
+                                ActivityHandler.switchActivity(MainActivity.this,HomeActivity.class, id, key);
                                 finish();
 
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
+                                popUp.changeMessage("Ich wandle auf dem ewigen Weg des Id Suchenden :(");
+                                popUp.show();
                             }
                         }
                     });
@@ -104,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
+        }
+        else{
+            popUp.changeMessage("Bist du zu dumm zwei gleiche Passwörter einzugeben?");
+            popUp.show();
         }
 
     }
