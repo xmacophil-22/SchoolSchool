@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText password2ET;
     EditText emailET;
     EditText userNameET;
+    DatabaseHandler DbHandler;
 
     RequestQueue requestQueue;
     String key;
@@ -33,18 +34,17 @@ public class MainActivity extends AppCompatActivity {
     Snippet snippet;
     PopUp popUp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         id = "";
         key = "";
+        DbHandler = new DatabaseHandler(this);
+
         snippet = new Snippet();
 
         requestQueue = Volley.newRequestQueue(this);
-
-
 
         password1ET = (EditText) findViewById(R.id.password1ET);
         password2ET = (EditText) findViewById(R.id.password2ET);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        ///////////////////////////////////////////////////////////sendPostRequest to recieve key
+        ///////////////////////////////////////////////////////////sendPostRequest to receive key
 
         if(login.password1.equals(login.password2)){
             login.refreshJSON();
@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(JSONObject result) {
                     try {
                         key = result.getString("key");
+                        //Registration at the Server Successful. Now add the username and password to the local Database
+                        //DbHandler.addUserLoginData(login.password1, login.userName);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         popUp.changeMessage("Ich wandle auf dem ewigen Weg des Key Suchenden :(");
