@@ -76,12 +76,6 @@ public class MainActivity extends AppCompatActivity {
         login.userName = userNameET.getText().toString();
         login.email = emailET.getText().toString();
 
-        ///////////////////////////////////////////put in JSON
-
-
-
-
-
 
         ///////////////////////////////////////////////////////////sendPostRequest to recieve key
 
