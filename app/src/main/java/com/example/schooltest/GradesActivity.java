@@ -67,7 +67,7 @@ public class GradesActivity extends AppCompatActivity {
         mySubjects.add(subject2);
         myGrid = (RecyclerView) findViewById(R.id.gridListRV);
         myGrid.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new RecyclerViewAdapter(this, mySubjects);
+        adapter = new RecyclerViewAdapter(this, this, mySubjects);
         myGrid.setAdapter(adapter);
 
         //myGrid = (GridView) findViewById(R.id.subjectsGV);

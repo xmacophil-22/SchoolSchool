@@ -1,5 +1,6 @@
 package com.example.schooltest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,11 +18,12 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private ArrayList<Subject> mySubjects;
     private LayoutInflater mInflater;
+    private SubjectBigPopUp mySubjectPopUp;
 
-
-    public RecyclerViewAdapter(Context context, ArrayList<Subject> mySubjects) {
+    public RecyclerViewAdapter(Activity activity, Context context, ArrayList<Subject> mySubjects) {
         this.mInflater = LayoutInflater.from(context);
         this.mySubjects = mySubjects;
+        mySubjectPopUp = new SubjectBigPopUp(activity);
     }
 
     // inflates the cell layout from xml when needed
@@ -76,7 +78,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("RecyclerViewAdapter", getItem(getAdapterPosition()).getName());
+                    int i = getAdapterPosition();
+                    if(i != 0 && i != 1) {
+                        Subject subject = getItem(i);
+                        mySubjectPopUp.setSubjectName(subject.getName());
+                        mySubjectPopUp.setTeacher(subject.getTeacher());
+                        mySubjectPopUp.setColor(subject.getColor());
+                        //Log.d("RecyclerViewAdapter", subject.getC1S().toString());
+                        //mySubjectPopUp.setC1S(subject.getC1S());
+                        //mySubjectPopUp.setC1W(subject.getC1W());
+                        mySubjectPopUp.show();
+                    }
                 }
             });
 
