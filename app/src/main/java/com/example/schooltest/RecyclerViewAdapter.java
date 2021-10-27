@@ -84,9 +84,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         mySubjectPopUp.setSubjectName(subject.getName());
                         mySubjectPopUp.setTeacher(subject.getTeacher());
                         mySubjectPopUp.setColor(subject.getColor());
-                        //Log.d("RecyclerViewAdapter", subject.getC1S().toString());
-                        //mySubjectPopUp.setC1S(subject.getC1S());
-                        //mySubjectPopUp.setC1W(subject.getC1W());
+                        Log.d("RecyclerViewAdapter", subject.getC1S().toString());
+                        mySubjectPopUp.setC1S(subject.getC1S());
+                        mySubjectPopUp.setC1W(subject.getC1W());
+                        mySubjectPopUp.setC2S(subject.getC2S());
+                        mySubjectPopUp.setC2W(subject.getC2W());
+                        mySubjectPopUp.setC3S(subject.getC3S());
+                        mySubjectPopUp.setC3W(subject.getC3W());
+                        mySubjectPopUp.setC4S(subject.getC4S());
+                        mySubjectPopUp.setC4W(subject.getC4W());
                         mySubjectPopUp.show();
                     }
                 }

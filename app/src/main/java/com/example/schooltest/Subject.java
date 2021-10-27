@@ -44,6 +44,10 @@ public class Subject {
         this.c2W = c2W;
         this.c3W = c3W;
         this.c4W = c4W;
+        this.c1S = c1S;
+        this.c2S = c2S;
+        this.c3S = c3S;
+        this.c4S = c4S;
 
         averageC1 = getAverage(c1W, percentWrite) + getAverage(c1S, percentSpeak);
         averageC2 = getAverage(c2W, percentWrite) + getAverage(c2S, percentSpeak);
