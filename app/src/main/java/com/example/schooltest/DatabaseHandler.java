@@ -13,17 +13,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Attributes
     private static final String TAG = "DbHandler";
 
-    private static final String TABLE_NAME = "UserLogin";
-    private static final String col1 = "username";
-    private static final String col2 = "password";
+    private static final String User_Login_Data = "User_Logetttt";
+    //private static final String school_Data = "UserLoginDatabase";
+    private static final String[] col = {"username", "password", "authKey", "snippetId"};
+
     public DatabaseHandler(Context context){
-        super(context, TABLE_NAME, null, 1);
+        super(context, User_Login_Data, null, 12);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        String createTable = "CREATE TABLE "+TABLE_NAME+
-                " ("+col1+" VARCHAR(255) ,"+ col2+" VARCHAR(255));";
+        String createTable = "CREATE TABLE "+User_Login_Data+
+                " ("
+                + col[0] + " VARCHAR(255) ,"
+                + col[1] + " VARCHAR(255) ,"
+                + col[2] + " VARCHAR(255) ,"
+                + col[3] + " VARCHAR(255)"
+                + ");";
 
         try {
             db.execSQL(createTable);
@@ -34,31 +40,63 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1){
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + User_Login_Data);
         onCreate(db);
     }
 
-    public boolean addUserLoginData(String username, String password){
+    public boolean addUserLoginData(String username, String password, String authKey, String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(col1, username);
-        contentValues.put(col2, password);
+        contentValues.put(col[0],username);
+        contentValues.put(col[1], password);
+        contentValues.put(col[2], authKey);
+        contentValues.put(col[3], id);
 
-        Log.e(TAG, "addData: Adding "+ username + " and " + password + " to" + TABLE_NAME);
+        long result = db.insert(User_Login_Data, null, contentValues);
 
-        long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
         //when insertion is incorrect it will return -1 -> false
         return result != -1;
     }
 
+    public String getKey(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT "+col[2]+" FROM " + User_Login_Data;
+
+        Cursor Raw_data = db.rawQuery(query, null);
+
+        Raw_data.moveToFirst();
+        String data = Raw_data.getString(0);
+        db.close();
+        Raw_data.close();
+        return data;
+    }
+
+    public String getId(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT "+col[3]+" FROM " + User_Login_Data;
+
+        Cursor Raw_data = db.rawQuery(query, null);
+
+        Raw_data.moveToFirst();
+        String data = Raw_data.getString(0);
+        Log.e("UserKey: ", data);
+        db.close();
+        Raw_data.close();
+        return data;
+    }
+
     public String[] getUserLoginData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT username,password FROM " + TABLE_NAME;
+        String query = "SELECT "
+            +col[0]+
+            ","
+            +col[1]+
+        " FROM " + User_Login_Data;
         Cursor Raw_data = db.rawQuery(query, null);
         String[] data = new String[2];
         Raw_data.moveToFirst();
-        data[0] = Raw_data.getString(0);    
+        data[0] = Raw_data.getString(0);
         data[1] = Raw_data.getString(1);
         db.close();
         Raw_data.close();
