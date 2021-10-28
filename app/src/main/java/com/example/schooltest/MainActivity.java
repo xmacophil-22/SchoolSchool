@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText password2ET;
     EditText emailET;
     EditText userNameET;
-    DatabaseHandler DbHandler;
+    DatabaseHandler databaseHandler;
 
     RequestQueue requestQueue;
     String key;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         id = "";
         key = "";
-        DbHandler = new DatabaseHandler(this);
+        databaseHandler = new DatabaseHandler(this);
 
         snippet = new Snippet();
 
@@ -100,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onSuccess(JSONObject result) {
                             try {
                                 id = result.getString("id");
+                                //databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
                                 ActivityHandler.switchActivity(MainActivity.this,HomeActivity.class, id, key);
-                                finish();
+                                
 
                             } catch (Exception e) {
                                 e.printStackTrace();

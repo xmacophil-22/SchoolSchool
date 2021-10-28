@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -25,14 +29,17 @@ public class SubjectBigPopUp extends Dialog {
     private ArrayList<Integer> c2S;
     private ArrayList<Integer> c3S;
     private ArrayList<Integer> c4S;
+    private String[] courses;
     private String name, teacher;
     private TextView nameTV, teacherTV;
     private ListView bSpeakSV, bWriteSV;
     private CardView cardView;
+    private Spinner dropDownS;
     int color;
 
     public SubjectBigPopUp(Activity a){
         super(a);
+        courses = new String[]{"1", "2", "3", "4"};
         c1W = new ArrayList<>();
         c1W.add(0);
         c2W = new ArrayList<>();
@@ -64,17 +71,49 @@ public class SubjectBigPopUp extends Dialog {
         bSpeakSV = (ListView) findViewById(R.id.bSpeakLV);
         bWriteSV = (ListView) findViewById(R.id.bWriteLV);
         cardView = (CardView) findViewById(R.id.bCardView);
+        dropDownS = (Spinner) findViewById(R.id.dropDownS);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, courses);
+        dropDownS.setAdapter(adapter);
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         cardView.setCardBackgroundColor(color);
         nameTV.setText(name);
         teacherTV.setText(teacher);
-        bSpeakSV.setAdapter(new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, c1S));
-        bWriteSV.setAdapter(new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, c1W));
+        dropDownS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 2:
+                        setArrayAdapter(c2S, c2W);
+                        break;
+                    case 3:
+                        setArrayAdapter(c3S, c3W);
+                        break;
+                    case 4:
+                        setArrayAdapter(c4S, c4W);
+                        break;
+                    default:
+                        setArrayAdapter(c1S,c1W);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    public void setArrayAdapter(ArrayList<Integer> mySGrades, ArrayList<Integer> myWGrades){
+        bSpeakSV.setAdapter(new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, mySGrades));
+        bWriteSV.setAdapter(new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, myWGrades));
     }
 
     public void setColor(int color) {

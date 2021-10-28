@@ -20,7 +20,7 @@ public class MainActivity2 extends AppCompatActivity {
     Login login;
     EditText password1ET;
     EditText userNameET;
-
+    DatabaseHandler databaseHandler;
     RequestQueue requestQueue;
     String id;
     String key;
@@ -56,6 +56,7 @@ public class MainActivity2 extends AppCompatActivity {
                 try {
                     key = result.getString("key");
                     id = result.getString("SnippetID");
+                    //databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
                     ActivityHandler.switchActivity(MainActivity2.this,HomeActivity.class, id, key);
 
                 } catch (JSONException e) {

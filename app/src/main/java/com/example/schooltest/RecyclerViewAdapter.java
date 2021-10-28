@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private LayoutInflater mInflater;
     private SubjectBigPopUp mySubjectPopUp;
 
+
     public RecyclerViewAdapter(Activity activity, Context context, ArrayList<Subject> mySubjects) {
         this.mInflater = LayoutInflater.from(context);
         this.mySubjects = mySubjects;
         mySubjectPopUp = new SubjectBigPopUp(activity);
+
     }
 
     // inflates the cell layout from xml when needed
