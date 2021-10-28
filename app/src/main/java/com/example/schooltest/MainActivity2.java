@@ -31,7 +31,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        databaseHandler = new DatabaseHandler(this);
         login = new Login();
         snippet = new Snippet();
 
@@ -56,7 +56,7 @@ public class MainActivity2 extends AppCompatActivity {
                 try {
                     key = result.getString("key");
                     id = result.getString("SnippetID");
-                    //databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
+                    databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
                     ActivityHandler.switchActivity(MainActivity2.this,HomeActivity.class, id, key);
 
                 } catch (JSONException e) {

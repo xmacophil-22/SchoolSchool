@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(JSONObject result) {
                     try {
                         key = result.getString("key");
-                        //Registration at the Server Successful. Now add the username and password to the local Database
-                        //DbHandler.addUserLoginData(login.password1, login.userName);
+
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -109,9 +109,10 @@ public class MainActivity extends AppCompatActivity {
                         public void onSuccess(JSONObject result) {
                             try {
                                 id = result.getString("id");
-                                //databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
+                                //Registration at the Server Successful. Now add the username and password to the local Database
+                                databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
                                 ActivityHandler.switchActivity(MainActivity.this,HomeActivity.class, id, key);
-                                
+
 
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -13,7 +13,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Attributes
     private static final String TAG = "DbHandler";
 
-    private static final String User_Login_Data = "User_Logetttt";
+    private static final String User_Login_Data = "User_Loging_Table";
     //private static final String school_Data = "UserLoginDatabase";
     private static final String[] col = {"username", "password", "authKey", "snippetId"};
 

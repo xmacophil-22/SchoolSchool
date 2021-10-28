@@ -29,8 +29,8 @@ public class StartActivity extends AppCompatActivity {
         /////////////////////////////////////////////////////////////////////change to different Activity weather locked in or not
         try{
             databaseHandler = new DatabaseHandler(this);
-            //id = databaseHandler.getId();
-            //key = databaseHandler.getKey();
+            id = databaseHandler.getId();
+            key = databaseHandler.getKey();
             ActivityHandler.switchActivity(this, HomeActivity.class, id, key);
         }
         catch (Exception e){
