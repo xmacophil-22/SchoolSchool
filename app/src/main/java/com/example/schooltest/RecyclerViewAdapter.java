@@ -1,5 +1,6 @@
 package com.example.schooltest;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -20,12 +21,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<Subject> mySubjects;
     private LayoutInflater mInflater;
     private SubjectBigPopUp mySubjectPopUp;
-
+    private SubjectChangePopUp mySubjectChangePopUp;
 
     public RecyclerViewAdapter(Activity activity, Context context, ArrayList<Subject> mySubjects) {
         this.mInflater = LayoutInflater.from(context);
         this.mySubjects = mySubjects;
         mySubjectPopUp = new SubjectBigPopUp(activity);
+        mySubjectChangePopUp = new SubjectChangePopUp(activity);
+        mySubjectPopUp.setAdapter(this);
+        mySubjectChangePopUp.setAdapter(this);
 
     }
 
@@ -39,6 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     // sets Data of each Item
+    @SuppressLint("WrongConstant")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Subject mySubject = mySubjects.get(position);
@@ -81,23 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int i = getAdapterPosition();
-                    if(i != 0 && i != 1) {
-                        Subject subject = getItem(i);
-                        mySubjectPopUp.setSubjectName(subject.getName());
-                        mySubjectPopUp.setTeacher(subject.getTeacher());
-                        mySubjectPopUp.setColor(subject.getColor());
-                        Log.d("RecyclerViewAdapter", subject.getC1S().toString());
-                        mySubjectPopUp.setC1S(subject.getC1S());
-                        mySubjectPopUp.setC1W(subject.getC1W());
-                        mySubjectPopUp.setC2S(subject.getC2S());
-                        mySubjectPopUp.setC2W(subject.getC2W());
-                        mySubjectPopUp.setC3S(subject.getC3S());
-                        mySubjectPopUp.setC3W(subject.getC3W());
-                        mySubjectPopUp.setC4S(subject.getC4S());
-                        mySubjectPopUp.setC4W(subject.getC4W());
-                        mySubjectPopUp.show();
-                    }
+                    setViewData(mySubjectPopUp);
                 }
             });
 
@@ -105,7 +94,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    Log.d("RecyclerViewAdapter", getItem(getAdapterPosition()).getTeacher());
+                    setViewData(mySubjectChangePopUp);
                     return true;
                 }
             });
@@ -115,6 +104,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public void onClick(View view) {
             //do nothing
         }
+
+        public void setViewData(SubjectBigPopUp mySubjectPopUp){
+            int i = getAdapterPosition();
+            if(i != 0 && i != 1) {
+                Subject subject = getItem(i);
+                mySubjectPopUp.setMyCurrent(i);
+                mySubjectPopUp.setSubjectName(subject.getName());
+                mySubjectPopUp.setTeacher(subject.getTeacher());
+                mySubjectPopUp.setColor(subject.getColor());
+                mySubjectPopUp.setC1S(subject.getC1S());
+                mySubjectPopUp.setC1W(subject.getC1W());
+                mySubjectPopUp.setC2S(subject.getC2S());
+                mySubjectPopUp.setC2W(subject.getC2W());
+                mySubjectPopUp.setC3S(subject.getC3S());
+                mySubjectPopUp.setC3W(subject.getC3W());
+                mySubjectPopUp.setC4S(subject.getC4S());
+                mySubjectPopUp.setC4W(subject.getC4W());
+                mySubjectPopUp.show();
+            }
+        }
     }
 
     // convenience method for getting data at click position
@@ -122,4 +131,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mySubjects.get(id);
     }
 
+    public void equalizeArrays(int i, ArrayList<Integer> c1s, ArrayList<Integer> c1w, ArrayList<Integer> c2s,
+                               ArrayList<Integer> c2w, ArrayList<Integer> c3s, ArrayList<Integer> c3w,
+                               ArrayList<Integer> c4s, ArrayList<Integer> c4w){
+
+        Subject subject = getItem(i);
+        subject.setC1S(c1s);
+        subject.setC1W(c1w);
+        subject.setC2S(c2s);
+        subject.setC2W(c2w);
+        subject.setC3S(c3s);
+        subject.setC3W(c3w);
+        subject.setC4S(c4s);
+        subject.setC4W(c4w);
+
+        notifyItemChanged(i);
+    }
+
+    public ArrayList<Subject> getMySubjects() {
+        return mySubjects;
+    }
 }

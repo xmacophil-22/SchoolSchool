@@ -13,7 +13,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_login);
         id = "";
         key = "";
         ChangeActivity();
@@ -22,7 +22,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        ChangeActivity();
+        //ChangeActivity();
     }
 
     private void ChangeActivity(){

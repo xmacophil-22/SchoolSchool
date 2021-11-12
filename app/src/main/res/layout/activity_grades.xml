@@ -36,6 +36,15 @@
                 android:textAlignment="center"
                 android:translationY="30dp" />
 
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/overAllTV"
+                android:translationY="40dp"
+                android:textSize="18sp"
+                android:textAlignment="center" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -38,13 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ///////////////////////////////////////////// Database Test Field
-
-
-
-
-        ////////////////////////////////////////////
-
 
         setContentView(R.layout.activity_main);
         id = "";

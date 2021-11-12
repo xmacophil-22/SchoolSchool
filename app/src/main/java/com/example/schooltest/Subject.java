@@ -24,7 +24,7 @@ public class Subject {
     private double averageC3;
     private double averageC4;
     private double averageTotal;
-
+    public static double overAll = 0;
 
     private int isVisible;
 
@@ -40,14 +40,15 @@ public class Subject {
         this.teacher = teacher;
         this.percentWrite = percentWrite;
         this.percentSpeak = percentSpeak;
-        this.c1W = c1W;
-        this.c2W = c2W;
-        this.c3W = c3W;
-        this.c4W = c4W;
-        this.c1S = c1S;
-        this.c2S = c2S;
-        this.c3S = c3S;
-        this.c4S = c4S;
+        this.c1W = new ArrayList<>(c1W);
+        this.c2W = new ArrayList<>(c2W);
+        this.c3W = new ArrayList<>(c3W);
+        this.c4W = new ArrayList<>(c4W);
+        this.c1S = new ArrayList<>(c1S);
+        this.c2S = new ArrayList<>(c2S);
+        this.c3S = new ArrayList<>(c3S);
+        this.c4S = new ArrayList<>(c4S);
+
 
         averageC1 = getAverage(c1W, percentWrite) + getAverage(c1S, percentSpeak);
         averageC2 = getAverage(c2W, percentWrite) + getAverage(c2S, percentSpeak);
@@ -58,6 +59,14 @@ public class Subject {
 
 
 
+    }
+
+    public static void recountOverAll(ArrayList<Subject> theSubjects){
+        overAll = 0;
+        for (Subject i: theSubjects) {
+            overAll = overAll + i.getAverageTotal();
+        }
+        overAll = Math.round((overAll/theSubjects.size())*100.0)/100.0;
     }
 
 
@@ -73,7 +82,10 @@ public class Subject {
         average = average/(grades.size());
         average = average*myPercent;
         average = Math.round(average*10.0)/10.0;
-        return average;
+        if(average > 0.0){
+            return average;
+        }
+        return 15.0;
     }
 
     private double countAverageTotal(double c1, double c2, double c3, double c4){
@@ -89,6 +101,15 @@ public class Subject {
             return 1;
         }
         else {return 0;}
+    }
+
+    private void updateAverages(){
+        averageC1 = getAverage(c1W, percentWrite) + getAverage(c1S, percentSpeak);
+        averageC2 = getAverage(c2W, percentWrite) + getAverage(c2S, percentSpeak);
+        averageC3 = getAverage(c3W, percentWrite) + getAverage(c3S, percentSpeak);
+        averageC4 = getAverage(c4W, percentWrite) + getAverage(c4S, percentSpeak);
+
+        averageTotal = countAverageTotal(averageC1, averageC2, averageC3, averageC4);
     }
     ////////////////////////////////////////////////////setter and getter
 
@@ -137,7 +158,8 @@ public class Subject {
     }
 
     public void setC1W(ArrayList<Integer> c1W) {
-        this.c1W = c1W;
+        this.c1W = new ArrayList<>(c1W);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC2W() {
@@ -145,7 +167,8 @@ public class Subject {
     }
 
     public void setC2W(ArrayList<Integer> c2W) {
-        this.c2W = c2W;
+        this.c2W = new ArrayList<>(c2W);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC3W() {
@@ -153,7 +176,8 @@ public class Subject {
     }
 
     public void setC3W(ArrayList<Integer> c3W) {
-        this.c3W = c3W;
+        this.c3W = new ArrayList<>(c3W);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC4W() {
@@ -161,7 +185,8 @@ public class Subject {
     }
 
     public void setC4W(ArrayList<Integer> c4W) {
-        this.c4W = c4W;
+        this.c4W = new ArrayList<>(c4W);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC1S() {
@@ -169,7 +194,8 @@ public class Subject {
     }
 
     public void setC1S(ArrayList<Integer> c1S) {
-        this.c1S = c1S;
+        this.c1S = new ArrayList<>(c1S);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC2S() {
@@ -177,7 +203,8 @@ public class Subject {
     }
 
     public void setC2S(ArrayList<Integer> c2S) {
-        this.c2S = c2S;
+        this.c2S = new ArrayList<>(c2S);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC3S() {
@@ -185,7 +212,8 @@ public class Subject {
     }
 
     public void setC3S(ArrayList<Integer> c3S) {
-        this.c3S = c3S;
+        this.c3S = new ArrayList<>(c3S);
+        updateAverages();
     }
 
     public ArrayList<Integer> getC4S() {
@@ -193,7 +221,8 @@ public class Subject {
     }
 
     public void setC4S(ArrayList<Integer> c4S) {
-        this.c4S = c4S;
+        this.c4S = new ArrayList<>(c4S);
+        updateAverages();
     }
 
     public double getAverageC1() {

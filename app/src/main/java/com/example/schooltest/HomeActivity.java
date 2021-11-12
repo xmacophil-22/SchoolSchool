@@ -7,10 +7,15 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class HomeActivity extends AppCompatActivity {
 
     String id;
     String key;
+    HashMap<Integer, ArrayList<Integer>> myHM;
+    ArrayList<Integer> lol;
 
 
     @Override
@@ -20,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("id");
         key = bundle.getString("key");
-
+        lol = new ArrayList<>();
 
     }
 

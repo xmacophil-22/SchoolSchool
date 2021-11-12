@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -18,44 +19,57 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SubjectBigPopUp extends Dialog {
 
-    private ArrayList<Integer> c1W;
-    private ArrayList<Integer> c2W;
-    private ArrayList<Integer> c3W;
-    private ArrayList<Integer> c4W;
-    private ArrayList<Integer> c1S;
-    private ArrayList<Integer> c2S;
-    private ArrayList<Integer> c3S;
-    private ArrayList<Integer> c4S;
-    private String[] courses;
-    private String name, teacher;
-    private TextView nameTV, teacherTV;
-    private ListView bSpeakSV, bWriteSV;
-    private CardView cardView;
-    private Spinner dropDownS;
+    protected RecyclerViewAdapter adapter;
+    protected int myCurrent;
+    protected Activity activity;
+
+    protected ArrayList<Integer> c1W;
+    protected ArrayList<Integer> c2W;
+    protected ArrayList<Integer> c3W;
+    protected ArrayList<Integer> c4W;
+    protected ArrayList<Integer> c1S;
+    protected ArrayList<Integer> c2S;
+    protected ArrayList<Integer> c3S;
+    protected ArrayList<Integer> c4S;
+    protected String[] courses;
+    protected String name, teacher;
+    protected TextView nameTV, teacherTV;
+    protected ListView bSpeakSV, bWriteSV;
+    protected CardView cardView;
+    protected Spinner dropDownS;
     int color;
+    HashMap<Integer, ArrayList<Integer>> sHM;
+    HashMap<Integer, ArrayList<Integer>> wHM;
 
     public SubjectBigPopUp(Activity a){
         super(a);
+        sHM = new HashMap<>();
+        wHM = new HashMap<>();
+        adapter = null;
+        activity = a;
         courses = new String[]{"1", "2", "3", "4"};
         c1W = new ArrayList<>();
-        c1W.add(0);
         c2W = new ArrayList<>();
-        c2W.add(0);
         c3W = new ArrayList<>();
-        c3W.add(0);
         c4W = new ArrayList<>();
-        c4W.add(0);
         c1S = new ArrayList<>();
-        c1S.add(0);
         c2S = new ArrayList<>();
-        c2S.add(0);
         c3S = new ArrayList<>();
-        c3S.add(0);
         c4S = new ArrayList<>();
+        c1S.add(0);
+        c2S.add(0);
+        c3S.add(0);
         c4S.add(0);
+        c1W.add(0);
+        c2W.add(0);
+        c3W.add(0);
+        c4W.add(0);
+        Log.d("SBPU", c1S.toString());
+
         name = "";
         teacher = "";
         color = 0;
@@ -74,34 +88,45 @@ public class SubjectBigPopUp extends Dialog {
         dropDownS = (Spinner) findViewById(R.id.dropDownS);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, courses);
         dropDownS.setAdapter(adapter);
-
+        sHM.put(0, c1S);
+        sHM.put(1, c2S);
+        sHM.put(2, c3S);
+        sHM.put(3, c4S);
+        wHM.put(0, c1W);
+        wHM.put(1, c2W);
+        wHM.put(2, c3W);
+        wHM.put(3, c4W);
+        Log.d("SBPU", sHM.get(0).toString());
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         cardView.setCardBackgroundColor(color);
         nameTV.setText(name);
         teacherTV.setText(teacher);
+        int adapterPos = dropDownS.getSelectedItemPosition();
+        setArrayAdapter(sHM.get(adapterPos), wHM.get(adapterPos));
         dropDownS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
-                    case 2:
+
+                setArrayAdapter(sHM.get(i), wHM.get(i));
+                /*switch (i){
+                    case 1:
                         setArrayAdapter(c2S, c2W);
                         break;
-                    case 3:
+                    case 2:
                         setArrayAdapter(c3S, c3W);
                         break;
-                    case 4:
+                    case 3:
                         setArrayAdapter(c4S, c4W);
                         break;
                     default:
                         setArrayAdapter(c1S,c1W);
                         break;
-                }
+                }*/
             }
 
             @Override
@@ -129,42 +154,54 @@ public class SubjectBigPopUp extends Dialog {
     }
 
     public void setC1W(ArrayList<Integer> c1W) {
-        //this.c1W = c1W;
-        this.c1W.clear();
-        for (int i:c1W) {
-            this.c1W.add(i);
-        }
+        this.c1W = new ArrayList<>(c1W);
+        wHM.put(0, this.c1W);
     }
 
     public void setC2W(ArrayList<Integer> c2W) {
-        this.c2W = c2W;
+        this.c2W = new ArrayList<>(c2W);
+        wHM.put(1, this.c2W);
     }
 
     public void setC3W(ArrayList<Integer> c3W) {
-        this.c3W = c3W;
+        this.c3W = new ArrayList<>(c3W);
+        wHM.put(2, this.c3W);
     }
 
     public void setC4W(ArrayList<Integer> c4W) {
-        this.c4W = c4W;
+        this.c4W = new ArrayList<>(c4W);
+        wHM.put(3, this.c4W);
     }
 
     public void setC1S(ArrayList<Integer> c1S) {
-        //this.c1S = c1S;
-        this.c1S.clear();
-        for (int i:c1S) {
-            this.c1S.add(i);
-        }
+        this.c1S = new ArrayList<>(c1S);
+        sHM.put(0, this.c1S);
     }
 
     public void setC2S(ArrayList<Integer> c2S) {
-        this.c2S = c2S;
+        this.c2S = new ArrayList<>(c2S);
+        sHM.put(1, this.c2S);
     }
 
     public void setC3S(ArrayList<Integer> c3S) {
-        this.c3S = c3S;
+        this.c3S = new ArrayList<>(c3S);
+        sHM.put(2, this.c3S);
     }
 
     public void setC4S(ArrayList<Integer> c4S) {
-        this.c4S = c4S;
+        this.c4S = new ArrayList<>(c4S);
+        sHM.put(3, this.c4S);
+    }
+
+    public int getMyCurrent() {
+        return myCurrent;
+    }
+
+    public void setMyCurrent(int myCurrent) {
+        this.myCurrent = myCurrent;
+    }
+
+    public void setAdapter(RecyclerViewAdapter adapter) {
+        this.adapter = adapter;
     }
 }

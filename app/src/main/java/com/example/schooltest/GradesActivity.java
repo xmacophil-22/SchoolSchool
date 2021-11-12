@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class GradesActivity extends AppCompatActivity {
     ArrayList<Subject> mySubjects;
     RecyclerView myGrid;
     RecyclerViewAdapter adapter;
+    TextView overAllTV;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,34 +53,33 @@ public class GradesActivity extends AppCompatActivity {
 
 
 
-        int color = Color.rgb(255,0,0);
+        int color = Color.rgb(161,84,84);
         int color2 = Color.rgb(0,255,0);
         Subject subject2 = new Subject("Mathe", color2, "Malenica", 60,40, c1w,c2w,c3w,c4w,c1s,c2s,c3s,c4s,View.VISIBLE);
         Subject subject = new Subject("Deutsch", color ,"Hilgarth", 50,50, c1w,c2w,c3w,c4w,c1s,c2s,c3s,c4s,View.VISIBLE);
+        Subject subjec1 = new Subject("Deutsch", color ,"Hilgarth", 50,50, c1w,c2w,c3w,c4w,c1s,c2s,c3s,c4s,View.VISIBLE);
+        Subject subjec3 = new Subject("Deutsch", color ,"Hilgarth", 50,50, c1w,c2w,c3w,c4w,c1s,c2s,c3s,c4s,View.VISIBLE);
+        Subject subjec4 = new Subject("Deutsch", color ,"Hilgarth", 50,50, c1w,c2w,c3w,c4w,c1s,c2s,c3s,c4s,View.VISIBLE);
         Subject subject00 = new Subject("", color ,"", 1,1, c1w,c2w,c3w,c4w,c1s,c2s,c3s,c4s,View.INVISIBLE);
         mySubjects = new ArrayList<>();
         mySubjects.add(subject00);
         mySubjects.add(subject00);
         mySubjects.add(subject);
         mySubjects.add(subject2);
-        mySubjects.add(subject2);
-        mySubjects.add(subject);
-        mySubjects.add(subject2);
-        mySubjects.add(subject2);
+        mySubjects.add(subjec1);
+        mySubjects.add(subjec3);
+        mySubjects.add(subjec4);
         myGrid = (RecyclerView) findViewById(R.id.gridListRV);
         myGrid.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new RecyclerViewAdapter(this, this, mySubjects);
         myGrid.setAdapter(adapter);
 
-        //myGrid = (GridView) findViewById(R.id.subjectsGV);
-        //CustomGridAdapter customGridAdapter = new CustomGridAdapter(getApplicationContext(), mySubjects);
-        //myGrid.setAdapter(customGridAdapter);
-        /*myGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("clicked", mySubjects.get(i).getName());
-            }
-        });*/
+        overAllTV = (TextView) findViewById(R.id.overAllTV);
+        overAllTV.setText(String.valueOf(Subject.overAll));
 
+    }
+
+    public RecyclerViewAdapter getAdapter() {
+        return adapter;
     }
 }
