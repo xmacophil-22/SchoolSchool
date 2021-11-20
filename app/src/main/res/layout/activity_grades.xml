@@ -4,7 +4,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradesbackground">
 
     <LinearLayout
             android:orientation="vertical"
@@ -13,7 +14,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="#5C5A5A"
+            android:background="#005C5A5A"
             android:id="@+id/linearLayout2">
 
         <TextView
@@ -23,15 +24,15 @@
                 android:id="@+id/textView2"
                 android:textSize="70sp"
                 android:fontFamily="sans-serif-black"
-                android:textColor="#BF967C"
+                android:textColor="#29506A"
                 android:textAlignment="center" />
 
         <TextView
                 android:text="Username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView4"
-                android:textColor="#B38A6F"
+                android:id="@+id/usernameTV"
+                android:textColor="#29506A"
                 android:textSize="24sp"
                 android:textAlignment="center"
                 android:translationY="30dp" />

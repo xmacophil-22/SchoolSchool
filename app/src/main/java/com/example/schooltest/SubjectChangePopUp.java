@@ -1,6 +1,7 @@
 package com.example.schooltest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +20,20 @@ import androidx.cardview.widget.CardView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubjectChangePopUp extends SubjectBigPopUp{
-    private Button okWBtn, okSBtn, deleteSBtn, deleteWBtn;
-    private EditText newGradeWET, newGradeSET;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
-    public SubjectChangePopUp(Activity a){
+public class SubjectChangePopUp extends SubjectBigPopUp{
+    private Button okWBtn, okSBtn, deleteSBtn, deleteWBtn, colorPickerBtn, percentBtn;
+    private EditText newGradeWET, newGradeSET;
+    private ChangePercentPopUp changePercentPopUp;
+    Context context;
+
+
+    public SubjectChangePopUp(Activity a, Context c){
         super(a);
+        context = c;
+        percWrite = 0;
+        percSpeak = 0;
     }
 
     @Override
@@ -32,12 +41,16 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subject_change_pop_up);
 
+        changePercentPopUp = new ChangePercentPopUp(activity, this);
+
+        colorPickerBtn = (Button) findViewById(R.id.colorPickerBtn);
         nameTV = (TextView) findViewById(R.id.bNameTV);
         teacherTV = (TextView) findViewById(R.id.bTeacherTV);
         bSpeakSV = (ListView) findViewById(R.id.bSpeakLV);
         bWriteSV = (ListView) findViewById(R.id.bWriteLV);
         cardView = (CardView) findViewById(R.id.bCardView);
         dropDownS = (Spinner) findViewById(R.id.dropDownS);
+        percentBtn = (Button) findViewById(R.id.percentBtn);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, courses);
         dropDownS.setAdapter(adapter);
 
@@ -61,6 +74,22 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
     @Override
     protected void onStart() {
         super.onStart();
+
+        percentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changePercentPopUp.setWrite(percWrite);
+                changePercentPopUp.setSpeak(percSpeak);
+                changePercentPopUp.show();
+            }
+        });
+
+        colorPickerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openColorPicker();
+            }
+        });
 
 
         bSpeakSV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -108,12 +137,15 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
             }
         });
 
+
+        ////////////////////////////////////////////////////////wenn neben das PopUp geklickt wird schließt es, speichert die Änderung der Noten und updated den gesamt Schnitt
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 Log.d("SubjectChangePopUp", "dismiss triggered");
-                adapter.equalizeArrays(myCurrent, c1S, c1W, c2S, c2W, c3S, c3W ,c4S,c4W);
+                adapter.equalizeAll(myCurrent, c1S, c1W, c2S, c2W, c3S, c3W ,c4S,c4W, color, percWrite, percSpeak);
                 Subject.recountOverAll(adapter.getMySubjects());
+                adapter.equalizeSnippet(myCurrent);
             }
         });
     }
@@ -121,37 +153,11 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
     public int getGradesS(int position){
 
         return sHM.get(dropDownS.getSelectedItemPosition()).get(position);
-        /*switch (dropDownS.getSelectedItemPosition()) {
-            case 1:
-                return c2S.get(position);
-
-            case 2:
-                return c3S.get(position);
-
-            case 3:
-                return c4S.get(position);
-
-            default:
-                return c1S.get(position);
-        }*/
     }
 
     public int getGradesW(int position){
 
         return wHM.get(dropDownS.getSelectedItemPosition()).get(position);
-        /*switch (dropDownS.getSelectedItemPosition()) {
-            case 1:
-                return c2W.get(position);
-
-            case 2:
-                return c3W.get(position);
-
-            case 3:
-                return c4W.get(position);
-
-            default:
-                return c1W.get(position);
-        }*/
     }
 
     public void removeGradeS(int grade){
@@ -165,44 +171,6 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
             }
             x++;
         }
-        /*switch (dropDownS.getSelectedItemPosition()) {
-            case 0:
-                for (int i:c1S) {
-                    if(i == grade){
-                        c1S.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-            case 1:
-                for (int i:c2S) {
-                    if(i == grade){
-                        c2S.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-            case 2:
-                for (int i:c3S) {
-                    if(i == grade){
-                        c3S.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-            case 3:
-                for (int i:c4S) {
-                    if(i == grade){
-                        c4S.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-        }*/
 
         myAdapter.notifyDataSetChanged();
     }
@@ -220,44 +188,6 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
             }
             x++;
         }
-        /*switch (dropDownS.getSelectedItemPosition()) {
-            case 0:
-                for (int i:c1W) {
-                    if(i == grade){
-                        c1W.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-            case 1:
-                for (int i:c2W) {
-                    if(i == grade){
-                        c2W.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-            case 2:
-                for (int i:c3W) {
-                    if(i == grade){
-                        c3W.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-            case 3:
-                for (int i:c4W) {
-                    if(i == grade){
-                        c4W.remove(x);
-                        break;
-                    }
-                    x++;
-                }
-                break;
-        }*/
 
         myAdapter.notifyDataSetChanged();
     }
@@ -267,20 +197,6 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
         int grade = Integer.parseInt(String.valueOf(newGradeWET.getText()));
         ArrayAdapter<Integer> myAdapter = (ArrayAdapter<Integer>) bWriteSV.getAdapter();
         wHM.get(dropDownS.getSelectedItemPosition()).add(grade);
-        /*switch (dropDownS.getSelectedItemPosition()) {
-            case 0:
-                c1W.add(grade);
-                break;
-            case 1:
-                c2W.add(grade);
-                break;
-            case 2:
-                c3W.add(grade);
-                break;
-            case 3:
-                c4W.add(grade);
-                break;
-        }*/
 
         myAdapter.notifyDataSetChanged();
     }
@@ -289,23 +205,25 @@ public class SubjectChangePopUp extends SubjectBigPopUp{
         int grade = Integer.parseInt(newGradeSET.getText().toString());
         ArrayAdapter<Integer> myAdapter = (ArrayAdapter<Integer>) bSpeakSV.getAdapter();
         sHM.get(dropDownS.getSelectedItemPosition()).add(grade);
-        /*switch (dropDownS.getSelectedItemPosition()) {
-            case 0:
-                c1S.add(grade);
-                break;
-            case 1:
-                c2S.add(grade);
-                break;
-            case 2:
-                c3S.add(grade);
-                break;
-            case 3:
-                c4S.add(grade);
-                break;
-        }*/
 
         myAdapter.notifyDataSetChanged();
     }
 
+    public void openColorPicker(){
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(context, color, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color2) {
+                color = color2;
+                cardView.setCardBackgroundColor(color);
+            }
+        });
+
+        colorPicker.show();
+    }
 
 }

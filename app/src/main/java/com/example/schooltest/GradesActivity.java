@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 
 public class GradesActivity extends AppCompatActivity {
@@ -23,15 +26,27 @@ public class GradesActivity extends AppCompatActivity {
     ArrayList<Subject> mySubjects;
     RecyclerView myGrid;
     RecyclerViewAdapter adapter;
-    TextView overAllTV;
+    TextView overAllTV, usernameTV;
+    DatabaseHandler databaseHandler;
+    UntisLoginPopUp untisLoginPopUp;
+    RequestQueue requestQueue;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestQueue = Volley.newRequestQueue(this);
+        untisLoginPopUp = new UntisLoginPopUp(this, requestQueue);
+        untisLoginPopUp.show();
+
         setContentView(R.layout.activity_grades);
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("id");
         key = bundle.getString("key");
+        databaseHandler = new DatabaseHandler(this);
+        usernameTV = (TextView) findViewById(R.id.usernameTV);
+        usernameTV.setText(databaseHandler.getUserLoginData()[0]);
 
         ArrayList<Integer> c1w = new ArrayList<>();
         c1w.add(10);
@@ -79,7 +94,4 @@ public class GradesActivity extends AppCompatActivity {
 
     }
 
-    public RecyclerViewAdapter getAdapter() {
-        return adapter;
-    }
 }

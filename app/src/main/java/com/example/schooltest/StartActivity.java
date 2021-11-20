@@ -31,7 +31,7 @@ public class StartActivity extends AppCompatActivity {
             databaseHandler = new DatabaseHandler(this);
             id = databaseHandler.getId();
             key = databaseHandler.getKey();
-            ActivityHandler.switchActivity(this, HomeActivity.class, id, key);
+            ActivityHandler.switchActivity(this, MainActivity.class, id, key);
         }
         catch (Exception e){
             ActivityHandler.switchActivity(this, MainActivity.class, id, key);

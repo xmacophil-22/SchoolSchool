@@ -22,14 +22,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private LayoutInflater mInflater;
     private SubjectBigPopUp mySubjectPopUp;
     private SubjectChangePopUp mySubjectChangePopUp;
+    private Snippet snippet;
 
     public RecyclerViewAdapter(Activity activity, Context context, ArrayList<Subject> mySubjects) {
         this.mInflater = LayoutInflater.from(context);
         this.mySubjects = mySubjects;
         mySubjectPopUp = new SubjectBigPopUp(activity);
-        mySubjectChangePopUp = new SubjectChangePopUp(activity);
+        mySubjectChangePopUp = new SubjectChangePopUp(activity, context);
         mySubjectPopUp.setAdapter(this);
         mySubjectChangePopUp.setAdapter(this);
+        snippet = new Snippet();
+        for(int i = 2; i < mySubjects.size(); i++){
+            snippet.addSubject(i, mySubjects.get(i));
+        }
 
     }
 
@@ -121,6 +126,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 mySubjectPopUp.setC3W(subject.getC3W());
                 mySubjectPopUp.setC4S(subject.getC4S());
                 mySubjectPopUp.setC4W(subject.getC4W());
+                mySubjectPopUp.setPercWrite(subject.getPercentWrite());
+                mySubjectPopUp.setPercSpeak(subject.getPercentSpeak());
                 mySubjectPopUp.show();
             }
         }
@@ -131,9 +138,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mySubjects.get(id);
     }
 
-    public void equalizeArrays(int i, ArrayList<Integer> c1s, ArrayList<Integer> c1w, ArrayList<Integer> c2s,
+    public void equalizeAll(int i, ArrayList<Integer> c1s, ArrayList<Integer> c1w, ArrayList<Integer> c2s,
                                ArrayList<Integer> c2w, ArrayList<Integer> c3s, ArrayList<Integer> c3w,
-                               ArrayList<Integer> c4s, ArrayList<Integer> c4w){
+                               ArrayList<Integer> c4s, ArrayList<Integer> c4w, int col, int percWrite, int percSpeak){
 
         Subject subject = getItem(i);
         subject.setC1S(c1s);
@@ -145,7 +152,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         subject.setC4S(c4s);
         subject.setC4W(c4w);
 
+        subject.setPercentWrite(percWrite);
+        subject.setPercentSpeak(percSpeak);
+        subject.updateAverages();
+
+        subject.setColor(col);
+
         notifyItemChanged(i);
+    }
+
+
+    public void equalizeSnippet(int position){
+        snippet.addSubject(position, mySubjects.get(position));
     }
 
     public ArrayList<Subject> getMySubjects() {

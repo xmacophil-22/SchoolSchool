@@ -26,6 +26,7 @@ public class SubjectBigPopUp extends Dialog {
     protected RecyclerViewAdapter adapter;
     protected int myCurrent;
     protected Activity activity;
+    protected int percWrite, percSpeak;
 
     protected ArrayList<Integer> c1W;
     protected ArrayList<Integer> c2W;
@@ -108,25 +109,12 @@ public class SubjectBigPopUp extends Dialog {
         teacherTV.setText(teacher);
         int adapterPos = dropDownS.getSelectedItemPosition();
         setArrayAdapter(sHM.get(adapterPos), wHM.get(adapterPos));
+
+        /////////////////////////////////////////////////////////////////////////////////////////////wenn ein anderes Halbjahr ausgewählt wird ändern sich die Notenlisten
         dropDownS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
                 setArrayAdapter(sHM.get(i), wHM.get(i));
-                /*switch (i){
-                    case 1:
-                        setArrayAdapter(c2S, c2W);
-                        break;
-                    case 2:
-                        setArrayAdapter(c3S, c3W);
-                        break;
-                    case 3:
-                        setArrayAdapter(c4S, c4W);
-                        break;
-                    default:
-                        setArrayAdapter(c1S,c1W);
-                        break;
-                }*/
             }
 
             @Override
@@ -136,6 +124,7 @@ public class SubjectBigPopUp extends Dialog {
         });
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////setzt die anzuzeigenden Notenlisten
     public void setArrayAdapter(ArrayList<Integer> mySGrades, ArrayList<Integer> myWGrades){
         bSpeakSV.setAdapter(new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, mySGrades));
         bWriteSV.setAdapter(new ArrayAdapter<Integer>(getContext(), android.R.layout.simple_list_item_1, myWGrades));
@@ -203,5 +192,13 @@ public class SubjectBigPopUp extends Dialog {
 
     public void setAdapter(RecyclerViewAdapter adapter) {
         this.adapter = adapter;
+    }
+
+    public void setPercWrite(int percWrite) {
+        this.percWrite = percWrite;
+    }
+
+    public void setPercSpeak(int percSpeak) {
+        this.percSpeak = percSpeak;
     }
 }

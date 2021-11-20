@@ -14,13 +14,16 @@
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/activity_main2.xml" value="0.35507246376811596" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/activity_register.xml" value="0.33469202898550726" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/activity_start.xml" value="0.25104166666666666" />
+        <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/change_percent_pop_up.xml" value="0.33" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/grades_edit.xml" value="0.2598958333333333" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/grades_overview.xml" value="0.8648255813953488" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/grid_fill_in.xml" value="0.29393115942028986" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/home.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/moodle_login_pop_up.xml" value="0.25" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/pop_up_error.xml" value="0.2765625" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/subject_big_pop_up.xml" value="0.2578125" />
         <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/subject_change_pop_up.xml" value="0.24322916666666666" />
+        <entry key="..\:/Users/mayaz/StudioProjects/SchoolTest2/app/src/main/res/layout/untis_login_pop_up.xml" value="0.2234375" />
       </map>
     </option>
   </component>

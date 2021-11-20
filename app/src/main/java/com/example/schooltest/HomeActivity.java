@@ -7,15 +7,17 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
 
-    String id;
-    String key;
-    HashMap<Integer, ArrayList<Integer>> myHM;
-    ArrayList<Integer> lol;
+    String id, key;
+    UntisLoginPopUp untisLoginPopUp;
+    RequestQueue requestQueue;
 
 
     @Override
@@ -25,7 +27,12 @@ public class HomeActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("id");
         key = bundle.getString("key");
-        lol = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(this);
+        untisLoginPopUp = new UntisLoginPopUp(this, requestQueue);
+        //wenn keine subject daten in der Database zu finden sind
+        //untisLoginPopUp.show();
+
+
 
     }
 

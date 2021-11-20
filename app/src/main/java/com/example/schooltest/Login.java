@@ -16,7 +16,6 @@ import org.json.JSONObject;
 public class Login extends AppCompatActivity {
 
     JSONObject loginJSON;
-    //MyRequestHandler myRequestHandler;
 
     String password1;
     String userName;

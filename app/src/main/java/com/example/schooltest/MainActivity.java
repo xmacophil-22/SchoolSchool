@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     Login login;
     EditText password1ET;
     EditText password2ET;
-    EditText emailET;
     EditText userNameET;
     DatabaseHandler databaseHandler;
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
         id = "";
         key = "";
         databaseHandler = new DatabaseHandler(this);
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         password1ET = (EditText) findViewById(R.id.password1ET);
         password2ET = (EditText) findViewById(R.id.password2ET);
         userNameET = (EditText) findViewById(R.id.userNameET);
-        emailET = (EditText) findViewById(R.id.emailET);
         login = new Login();
         popUp = null;
 
@@ -76,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         login.password1 = password1ET.getText().toString();
         login.password2 = password2ET.getText().toString();
         login.userName = userNameET.getText().toString();
-        login.email = emailET.getText().toString();
 
 
         ///////////////////////////////////////////////////////////sendPostRequest to receive key
@@ -103,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 id = result.getString("id");
                                 //Registration at the Server Successful. Now add the username and password to the local Database
-                                databaseHandler.addUserLoginData("login.userName", "login.password", key, id);
-                                ActivityHandler.switchActivity(MainActivity.this,HomeActivity.class, id, key);
+                                databaseHandler.addUserLoginData(userNameET.getText().toString(), "login.password", key, id);
+                                ActivityHandler.switchActivity(MainActivity.this,GradesActivity.class, id, key);
 
 
                             } catch (Exception e) {

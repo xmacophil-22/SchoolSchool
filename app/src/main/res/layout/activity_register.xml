@@ -32,7 +32,8 @@
             android:clickable="true"
             android:focusable="true"
             android:text="Login"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="changeToLogin" />
 
     <androidx.appcompat.widget.AppCompatButton
             android:scaleType="centerCrop"
@@ -47,19 +48,19 @@
             android:textSize="16sp"
             android:textColor="#EDDEDE" />
 
-    <ImageView
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="194dp"
-            android:layout_height="65dp"
-            app:srcCompat="@drawable/commitbtn"
-            android:id="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.869"
+    <androidx.appcompat.widget.AppCompatButton
+            android:text="REGISTER"
+            android:layout_width="198dp"
+            android:layout_height="57dp"
+            android:id="@+id/button2"
+            android:background="@drawable/commitbtn"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.811" />
+            app:layout_constraintHorizontal_bias="0.812"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="92dp"
+            android:onClick="submit" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="278dp"
@@ -118,12 +119,13 @@
                 app:layout_constraintEnd_toEndOf="@+id/userNameET"
                 android:textColor="#B3EDDEDE"
                 android:layout_marginTop="32dp"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintHorizontal_bias="0.0"
+                android:textSize="16sp" />
 
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/password1ET"
                 android:background="@drawable/edittext"
@@ -131,6 +133,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/password2ET"
+                android:background="@drawable/edittext"
+                android:paddingLeft="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView17"
+                android:inputType="textPassword" />
 
         <TextView
                 android:text="Passwort wiederholen"
@@ -141,7 +155,9 @@
                 app:layout_constraintEnd_toEndOf="@+id/password1ET"
                 app:layout_constraintStart_toStartOf="@+id/password1ET"
                 android:layout_marginTop="32dp"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintHorizontal_bias="0.0"
+                android:textColor="#B3EDDEDE"
+                android:textSize="16sp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
