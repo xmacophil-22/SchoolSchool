@@ -69,7 +69,6 @@ public class SubjectBigPopUp extends Dialog {
         c2W.add(0);
         c3W.add(0);
         c4W.add(0);
-        Log.d("SBPU", c1S.toString());
 
         name = "";
         teacher = "";

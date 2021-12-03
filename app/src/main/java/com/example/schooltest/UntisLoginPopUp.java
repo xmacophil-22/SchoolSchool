@@ -11,22 +11,27 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class UntisLoginPopUp extends PopUp{
+public class UntisLoginPopUp extends PopUp {
 
     EditText passwordET, usernameET;
     Login untisLoginData;
     PopUp errorPopup;
     RequestQueue requestQueue;
+    String key;
 
-    public UntisLoginPopUp(Activity a, RequestQueue requestQueue) {
+
+    public UntisLoginPopUp(Activity a, RequestQueue requestQueue, String key) {
         super(a);
         message = "Du hast dich noch nicht in moodle angemeldet. \n Ohne die Anmeldung kannst du diese Funktion leider nicht nutzen.";
         untisLoginData = new Login();
         errorPopup = new PopUpError(a, "Da ist wohl etwas schief gelaufen");
         this.requestQueue = requestQueue;
+        this.key = key;
         setCanceledOnTouchOutside(false);
+
     }
 
     @Override
@@ -49,14 +54,15 @@ public class UntisLoginPopUp extends PopUp{
                 Log.d("LoginData", untisLoginData.password1);
 
 
-                MyRequestHandler.volleyPost(errorPopup, "", untisLoginData.loginJSON, requestQueue, "", new VolleyCallback() {
+                MyRequestHandler.volleyRequest(1, errorPopup, "https://schoolschooli.herokuapp.com/webuntis/login/", untisLoginData.loginJSON, requestQueue, key, new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject result) {
-                        //get Subjects
+                        dismiss();
                     }
                 });
-                dismiss();
             }
         });
     }
 }
+
+

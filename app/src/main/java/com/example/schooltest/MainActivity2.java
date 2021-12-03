@@ -50,13 +50,14 @@ public class MainActivity2 extends AppCompatActivity {
         login.userName = userNameET.getText().toString();
         login.refreshJSON();
 
-        MyRequestHandler.volleyPost(popUp,"https://schoolschooli.herokuapp.com/login/", login.loginJSON, requestQueue, key, new VolleyCallback() {
+        MyRequestHandler.volleyRequest(1, popUp,"https://schoolschooli.herokuapp.com/login/", login.loginJSON, requestQueue, key, new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {
                 try {
                     key = result.getString("key");
                     id = result.getString("SnippetID");
-                    databaseHandler.addUserLoginData(userNameET.getText().toString(), "login.password", key, id);
+                    Log.d("Login", id);
+                    databaseHandler.addUserLoginData(login.userName, login.password1, key, id);
                     ActivityHandler.switchActivity(MainActivity2.this,GradesActivity.class, id, key);
 
                 } catch (JSONException e) {

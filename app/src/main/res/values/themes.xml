@@ -15,11 +15,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.SchoolTest.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="Theme.SchoolTest.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Theme.SchoolTest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <color name="colorPrimaryDark">#0D0C0B</color>

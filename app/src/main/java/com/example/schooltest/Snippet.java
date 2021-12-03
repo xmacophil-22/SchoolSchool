@@ -1,6 +1,9 @@
 package com.example.schooltest;
 
+import android.app.Activity;
 import android.util.Log;
+
+import com.example.schooltest.databinding.ActivityRegisterBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,24 +14,25 @@ import java.util.HashMap;
 
 public class Snippet {
     public static JSONObject mySnippet = new JSONObject();
-    JSONObject data;
-    JSONArray subjects;
+    private JSONObject data;
+    private JSONArray subjects;
 
     public Snippet(){
         data = new JSONObject();
         subjects = new JSONArray();
-
         try {
-            subjects.put(0, "first");
-            subjects.put(1,"second");
             data.put("subjects", subjects);
-            mySnippet.put("data", data);
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+            mySnippet.get("data");
         }
+        catch (Exception u){
+            try{
+            mySnippet.put("data", data);}
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     public void addSubject(int position, Subject theSubject){
@@ -61,9 +65,9 @@ public class Snippet {
                 }
                 subject.put("c" + i, classGrades);
             }
-            Log.d("theNewSubject", subject.toString());
             subjects = mySnippet.getJSONObject("data").getJSONArray("subjects");
             subjects.put(position, subject);
+            mySnippet.put("subjects", subjects);
         }
         catch (Exception e){
             e.printStackTrace();

@@ -13,9 +13,11 @@ public abstract class PopUp extends Dialog {
     protected Button acceptBtn;
     protected TextView messageTV;
     protected String message;
+    protected Activity activity;
 
     public PopUp(Activity a){
        super(a);
+       activity = a;
     }
 
     public void changeMessage(String m){

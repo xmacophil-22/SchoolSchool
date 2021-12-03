@@ -32,10 +32,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mySubjectPopUp.setAdapter(this);
         mySubjectChangePopUp.setAdapter(this);
         snippet = new Snippet();
-        for(int i = 2; i < mySubjects.size(); i++){
-            snippet.addSubject(i, mySubjects.get(i));
-        }
-
     }
 
     // inflates the cell layout from xml when needed

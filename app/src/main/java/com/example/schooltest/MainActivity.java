@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(login.password1.equals(login.password2)){
             login.refreshJSON();
-            MyRequestHandler.volleyPost(popUp,"https://schoolschooli.herokuapp.com/registration/", login.loginJSON, requestQueue, key,  new VolleyCallback() { ////neeeds change
+            MyRequestHandler.volleyRequest(1, popUp,"https://schoolschooli.herokuapp.com/registration/", login.loginJSON, requestQueue, key,  new VolleyCallback() { ////neeeds change
                 @Override
                 public void onSuccess(JSONObject result) {
                     try {
@@ -94,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
                         popUp.show();
                     }
                     Snippet snippet = new Snippet();
-                    MyRequestHandler.volleyPost( popUp,"https://schoolschooli.herokuapp.com/snippets/",snippet.mySnippet, requestQueue, key, new VolleyCallback() {
+                    MyRequestHandler.volleyRequest(1, popUp,"https://schoolschooli.herokuapp.com/snippets/",snippet.mySnippet, requestQueue, key, new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONObject result) {
                             try {
                                 id = result.getString("id");
                                 //Registration at the Server Successful. Now add the username and password to the local Database
-                                databaseHandler.addUserLoginData(userNameET.getText().toString(), "login.password", key, id);
+                                databaseHandler.addUserLoginData(login.userName, login.password1, key, id);
                                 ActivityHandler.switchActivity(MainActivity.this,GradesActivity.class, id, key);
 
 
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
             });
 
