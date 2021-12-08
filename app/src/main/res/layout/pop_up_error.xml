@@ -9,7 +9,7 @@
     <ImageView
             android:layout_width="224dp"
             android:layout_height="199dp"
-            app:srcCompat="@drawable/ic_launcher_background"
+            app:srcCompat="@drawable/message"
             android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -18,15 +18,16 @@
 
     <androidx.appcompat.widget.AppCompatButton
             android:text="Okay!"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="43dp"
             android:id="@+id/okBtn"
             app:layout_constraintTop_toTopOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintVertical_bias="0.92" />
+            app:layout_constraintVertical_bias="0.92"
+            android:background="@drawable/commitbtn" />
 
     <TextView
             android:text="TextView"
@@ -37,7 +38,7 @@
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintVertical_bias="0.322"
-            android:textColor="#BF967C" />
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintVertical_bias="0.354"
+            android:textColor="#B3EDDEDE" />
 </androidx.constraintlayout.widget.ConstraintLayout>

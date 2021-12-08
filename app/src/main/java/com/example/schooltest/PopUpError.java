@@ -21,6 +21,7 @@ public class PopUpError extends PopUp {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pop_up_error);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         messageTV = (TextView) findViewById(R.id.messageTV);
         messageTV.setText(message);
         acceptBtn = (Button) findViewById(R.id.okBtn);

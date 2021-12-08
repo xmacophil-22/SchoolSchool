@@ -110,9 +110,13 @@ public class GradesActivity extends AppCompatActivity {
                     });
                 }
                 else {
+                    int x = 2;
                     for (Subject s:subjects) {
                         mySubjects.add(s);
+                        snippet.addSubject(x-2, mySubjects.get(x));
+                        x++;
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -131,7 +135,7 @@ public class GradesActivity extends AppCompatActivity {
         MyRequestHandler.volleyRequest(2, popUpError, "https://schoolschooli.herokuapp.com/snippets/" + id + "/", Snippet.mySnippet, requestQueue, key, new VolleyCallback() {
             @Override
             public void onSuccess(JSONObject result) {
-                Log.d("GradesActivity", "upload success");
+                Log.d("GradesActivity", Snippet.mySnippet.toString());
             }
         });
     }

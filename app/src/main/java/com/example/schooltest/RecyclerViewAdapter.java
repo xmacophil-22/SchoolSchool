@@ -159,7 +159,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public void equalizeSnippet(int position){
-        snippet.addSubject(position, mySubjects.get(position));
+        Log.d("addSubject", position+ ", " + mySubjects.get(position).getName());
+        snippet.addSubject(position - 2, mySubjects.get(position));
+
     }
 
     public ArrayList<Subject> getMySubjects() {
