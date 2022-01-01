@@ -39,6 +39,7 @@ public class UntisLoginPopUp extends PopUp {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.untis_login_pop_up);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         passwordET = (EditText) findViewById(R.id.passwordET);
         messageTV = (TextView) findViewById(R.id.uMessageTV);
         usernameET = (EditText) findViewById(R.id.userNameET);
@@ -58,6 +59,11 @@ public class UntisLoginPopUp extends PopUp {
                     @Override
                     public void onSuccess(JSONObject result) {
                         dismiss();
+                    }
+
+                    @Override
+                    public void onDefeat() {
+
                     }
                 });
             }

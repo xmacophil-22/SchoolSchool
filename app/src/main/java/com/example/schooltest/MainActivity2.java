@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.schooltest.Database.MySQLiteHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ public class MainActivity2 extends AppCompatActivity {
     Login login;
     EditText password1ET;
     EditText userNameET;
-    DatabaseHandler databaseHandler;
+    MySQLiteHelper db;
     RequestQueue requestQueue;
     String id;
     String key;
@@ -31,7 +32,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        databaseHandler = new DatabaseHandler(this);
+        db = new MySQLiteHelper(this);
         login = new Login();
         snippet = new Snippet();
 
@@ -56,15 +57,31 @@ public class MainActivity2 extends AppCompatActivity {
                 try {
                     key = result.getString("key");
                     id = result.getString("SnippetID");
-                    Log.d("Login", id);
-                    databaseHandler.addUserLoginData(login.userName, login.password1, key, id);
-                    ActivityHandler.switchActivity(MainActivity2.this,GradesActivity.class, id, key);
+                    Log.d("Login", result.toString());
+                    db.add_User(login.userName, key, id);
+                    MyRequestHandler.volleyRequest(0, popUp, "https://schoolschooli.herokuapp.com/snippets/" + id, null, requestQueue, key, new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONObject result) {
+                            db.add_Snippet(result);
+                        }
+
+                        @Override
+                        public void onDefeat() {
+
+                        }
+                    });
+                    ActivityHandler.switchActivity(MainActivity2.this,Main.class, id, key);
 
                 } catch (JSONException e) {
                     popUp.changeMessage("Ich wandle auf dem ewigen Weg des Suchenden :(");
                     popUp.show();
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onDefeat() {
+
             }
         });
     }

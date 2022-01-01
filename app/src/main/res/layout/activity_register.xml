@@ -34,7 +34,8 @@
             android:focusable="true"
             android:text="Login"
             android:textSize="16sp"
-            android:onClick="changeToLogin" />
+            android:onClick="changeToLogin"
+            android:textColor="#050505" />
 
     <androidx.appcompat.widget.AppCompatButton
             android:scaleType="centerCrop"

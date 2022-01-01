@@ -15,7 +15,7 @@
             android:screenOrientation="portrait">
 
         <activity
-                android:name=".Main"
+                android:name=".StartActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartActivity"/>
-        <activity android:name=".MainActivity2" />
-        <activity android:name=".GradesActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Main"/>
+        <activity android:name=".MainActivity2"
+                android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".MainActivity"
+                android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

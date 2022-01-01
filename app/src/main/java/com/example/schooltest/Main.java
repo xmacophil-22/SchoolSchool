@@ -12,15 +12,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.schooltest.Database.MySQLiteHelper;
 import com.google.android.material.navigation.NavigationView;
 
 public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private MySQLiteHelper db;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        db = new MySQLiteHelper(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,13 +42,17 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            /*case R.id.nav_grades:
+            case R.id.nav_grades:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GradesActivity()).commit();
                 break;
             case R.id.nav_food:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GradesActivity()).commit();
-                break;*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FoodActivity()).commit();
+                break;
             case R.id.nav_logout:
+                db.delete_User(1);
+                Snippet snippet = new Snippet();
+                snippet.clearSnippet();
+                db.change_Snippet(Snippet.mySnippet, 1);
                 ActivityHandler.switchActivity(this, MainActivity.class, "","");
                 break;
         }
@@ -59,7 +67,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
             drawer.closeDrawer(GravityCompat.START);
         }
         else{
-        super.onBackPressed();
+            super.onBackPressed();
         }
     }
 }

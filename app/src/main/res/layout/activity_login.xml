@@ -47,6 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="5dp"
             android:text="Sign Up"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:onClick="switchToRegister" />
 

@@ -1,5 +1,6 @@
 package com.example.schooltest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.schooltest.Database.MyContractClass;
+import com.example.schooltest.Database.MySQLiteHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +29,23 @@ import java.util.Map;
 
 public class MyRequestHandler extends AppCompatActivity {
 
+    public static void saveSnippet(Activity a){
+        PopUpError popUpError = new PopUpError(a, "mist");
+        MySQLiteHelper db = new MySQLiteHelper(a);
+        RequestQueue requestQueue = Volley.newRequestQueue(a);
+        Log.d("Snippet before posting", Snippet.mySnippet.toString());
+        MyRequestHandler.volleyRequest(2, popUpError, "https://schoolschooli.herokuapp.com/snippets/" + db.getUserData(MyContractClass.UserdataTable.COL_SNIPPETID) + "/", Snippet.mySnippet, requestQueue, db.getUserData(MyContractClass.UserdataTable.COL_KEY), new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject result) {
 
+            }
+
+            @Override
+            public void onDefeat() {
+
+            }
+        });
+    }
 
 
     public static void volleyRequest(int method,PopUp myPopUp, String postUrl, JSONObject postData, RequestQueue requestQueue, String key, final VolleyCallback callback) {
@@ -53,9 +72,12 @@ public class MyRequestHandler extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if(myPopUp!= null){myPopUp.show();}
+                else {
+                    callback.onDefeat();
+                }
                 error.printStackTrace();
-
             }
+
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

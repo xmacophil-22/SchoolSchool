@@ -14,6 +14,8 @@ import android.widget.EditText;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.schooltest.Database.MyContractClass;
+import com.example.schooltest.Database.MySQLiteHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     EditText password1ET;
     EditText password2ET;
     EditText userNameET;
-    DatabaseHandler databaseHandler;
+    MySQLiteHelper db;
 
     RequestQueue requestQueue;
     String key;
@@ -41,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         id = "";
         key = "";
-        databaseHandler = new DatabaseHandler(this);
+        db = new MySQLiteHelper(this);
+        Log.d("myIDIs", db.getUserData(MyContractClass.UserdataTable.COL_KEY));
 
         snippet = new Snippet();
+        //db.add_Snippet(Snippet.mySnippet);
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -100,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 id = result.getString("id");
                                 //Registration at the Server Successful. Now add the username and password to the local Database
-                                databaseHandler.addUserLoginData(login.userName, login.password1, key, id);
-                                ActivityHandler.switchActivity(MainActivity.this,GradesActivity.class, id, key);
+                                db.add_User(login.userName, key, id);
+                                db.add_Snippet(Snippet.mySnippet);
+                                ActivityHandler.switchActivity(MainActivity.this,Main.class, id, key);
 
 
                             } catch (Exception e) {
@@ -110,7 +115,17 @@ public class MainActivity extends AppCompatActivity {
                                 popUp.show();
                             }
                         }
+
+                        @Override
+                        public void onDefeat() {
+
+                        }
                     });
+                }
+
+                @Override
+                public void onDefeat() {
+
                 }
             });
 

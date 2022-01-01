@@ -65,6 +65,7 @@ public class Subject {
         overAll = 0;
         for (Subject i: theSubjects) {
             overAll = overAll + i.getAverageTotal();
+            Log.d("overAll", String.valueOf(overAll));
         }
         overAll = Math.round((overAll/theSubjects.size())*100.0)/100.0;
     }

@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,6 +23,7 @@ public class Snippet {
         subjects = new JSONArray();
         try {
             data.put("subjects", subjects);
+            data.put("timestamp", 0);
             mySnippet.get("data");
         }
         catch (Exception u){
@@ -65,14 +67,32 @@ public class Snippet {
                 }
                 subject.put("c" + i, classGrades);
             }
-            subjects = mySnippet.getJSONObject("data").getJSONArray("subjects");
+            data = mySnippet.getJSONObject("data");
+            subjects = data.getJSONArray("subjects");
             subjects.put(position, subject);
-            mySnippet.put("subjects", subjects);
+            data.put("subjects", subjects);
+            data.put("timestamp", new Timestamp(System.currentTimeMillis()));
+            mySnippet.put("data", data);
+            Log.d("snippet", mySnippet.toString());
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    public void clearSnippet(){
+        data = new JSONObject();
+        subjects = new JSONArray();
+        try {
+            data.put("subjects", subjects);
+            data.put("timestamp", 0);
+            mySnippet.put("data", data);
+            Log.d("Snippet", mySnippet.toString());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 
