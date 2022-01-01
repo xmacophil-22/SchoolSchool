@@ -15,6 +15,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "com.example.schooltest.finalData";
 
+    //////////////////////////////////////////////////////////////Befehle für die Kreation der Datenbank (nur einmal benutzt)
+
     public static final String SQL_CREATE_USERDATA = "CREATE TABLE " + MyContractClass.UserdataTable.TABLE_NAME + " ( " +
             MyContractClass.UserdataTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT " +
             " , " + MyContractClass.UserdataTable.COL_USERNAME + " TEXT " +
@@ -26,6 +28,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             " , " + MyContractClass.SnippetTable.COL_SIPPET + " TEXT " +
             " , " + MyContractClass.SnippetTable.COL_TIMESTAMP + " TEXT )";
 
+    /////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////////////////////////////testet ob bereits eine Datenbank mit dem DATABASE_NAME existiert, wenn ja, dann keine neue
+    //sonst neue Datenbank
     public MySQLiteHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -44,6 +51,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    /////////////////////////////////////////////////////////////////////////legt neuen Benutzer in der richtigen Zeile an
 
     public long add_User(String username, String key, String id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -82,7 +91,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         return newID;
     }
-
+    //////////////////////////////////////////////////////ändert oder erstellt Snippet (Daten des Benutzers) je nachdem
     public long add_Snippet(JSONObject snippet){
         SQLiteDatabase db = this.getWritableDatabase();
         long newID;
@@ -102,6 +111,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return newID;
     }
 
+    /////////////////////////////////////////////////////////////löscht den Nutzer zum Ausloggen
+
     public void delete_User(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         /*String aSQL = "DELETE FROM " + MyContractClass.UserdataTable.TABLE_NAME + " "
@@ -114,6 +125,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 + " WHERE " + MyContractClass.SnippetTable._ID + "=" + id;
         db.execSQL(sSQL);
     }
+
+    ////////////////////////////////////////////////ändert das Snippet
 
     public void change_Snippet(JSONObject snippet, int id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -131,7 +144,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(sSQL);
 
     }
-
+    /////////////////////////////////////////////////gibt ein JSONObject Array zurück, Stelle 0 ist das Snippet, 1 der Timestamp
     public JSONObject[] getSnippet(){
         Cursor cursor = get_Table(MyContractClass.SnippetTable.TABLE_NAME);
         String snippet = "";
@@ -155,7 +168,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         }
         return objects;
     }
-
+    /////////////////////////////////////////gibt die Benutzerdaten zurück
     public String getUserData(String culumnName){
         Cursor cursor = get_Table(MyContractClass.UserdataTable.TABLE_NAME);
         String data = "";
@@ -167,13 +180,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.d("userdata", data);
         return data;
     }
-
+    ///////////////////////////////////////////////////////gibt eine Tabelle der Datenbank zurück
     private Cursor get_Table(String tableName){
         SQLiteDatabase db = this.getWritableDatabase();
         String sSQL = "SELECT * FROM " + tableName;
         Cursor data = db.rawQuery(sSQL, null);
         return data;
     }
+
+    ///////////////////////////////////////////////////gibt die Länge einer Tabelle zurück, um zu Testen ob 0
 
     public int getTableLength(String tableName){
         Cursor cursor = get_Table(tableName);

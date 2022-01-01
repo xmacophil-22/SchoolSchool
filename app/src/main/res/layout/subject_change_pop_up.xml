@@ -23,14 +23,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatButton
-                    android:text="C"
+            <ImageButton
                     android:layout_width="53dp"
                     android:layout_height="46dp"
                     android:id="@+id/colorPickerBtn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bNameTV"
-                    app:layout_constraintBottom_toBottomOf="@+id/bTeacherTV" />
+                    app:layout_constraintBottom_toBottomOf="@+id/bTeacherTV"
+                    android:src="@drawable/ic_baseline_color_lens_24" />
 
             <androidx.appcompat.widget.AppCompatButton
                     android:text="%"

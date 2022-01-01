@@ -3,6 +3,8 @@ package com.example.schooltest.Database;
 import android.provider.BaseColumns;
 
 public final  class MyContractClass {
+
+    ///////////////////////////////////////////////////////////////////////////////////Klasse mit allen Namen der Datenbank
     public MyContractClass(){}
     public static abstract class UserdataTable implements BaseColumns{
         public static final String TABLE_NAME = "UserdataTable";
