@@ -54,7 +54,7 @@ public class FoodActivity extends Fragment {
                 try{
                     Log.d("result", result.toString());
                     JSONArray jsonArray = result.getJSONArray("Meals");
-                    JSONArray meal = jsonArray.getJSONObject(1).getJSONArray("meal");
+                    JSONArray meal = jsonArray.getJSONArray(1);
                     for(int a = 0; a < 4; a++){
                         JSONArray meals = meal.getJSONArray(a);
                         String[] supplements = new String[5];
