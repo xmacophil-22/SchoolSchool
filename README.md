@@ -4,5 +4,7 @@ You are able to Login with different Devices, because your Grades will be stored
 ## Images
 <div style="display: inline;">
 <img src="Images/Login.jpg" width=300>
+<img src="Images/Signup.jpg" width=300>
+<img src="Images/Moodle.jpg" width=300>
 <img src="Images/Sidebar.jpg" width=300>
 </div>
